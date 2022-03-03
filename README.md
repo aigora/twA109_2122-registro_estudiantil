@@ -1,4 +1,4 @@
-# [Sistema de Identificación y Registro Estudiantil.]
+# Sistema de Identificación y Registro Estudiantil.
 
 ## Integrantes del equipo
 
