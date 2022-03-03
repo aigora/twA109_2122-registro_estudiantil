@@ -1,8 +1,8 @@
 # Sistema de Identificación y Registro Estudiantil.
 Registro destinado al estudiante, que comprende a la relación entre el profesor y las distintas
 exigencias a lo largo de su paso por el centro. Incluyendo el acceso a instalaciones, calendario
-lectivo y fechas con gran importancia. Además se incluye un portal de entrada excluyendo cualquier 
-tipo de malentendido.
+lectivo y fechas con gran importancia. Además, se incluye un portal de entrada excluyendo cualquier 
+tipo de malentendido de identificación.
 
 ## Integrantes del equipo
 
