@@ -1,5 +1,4 @@
-# [Título del trabajo]
-Sistema de identificación y registro estudiantil
+# [Sistema de Identificación y Registro Estudiantil.]
 
 ## Integrantes del equipo
 
