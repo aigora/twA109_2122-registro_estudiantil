@@ -7,8 +7,8 @@ tipo de malentendido de identificación.
 ## Integrantes del equipo
 
 - Álvaro Sánchez Barba @ASB02
-- Javier Tovar Castro
-- Jaime Torres Abad
+- Javier Tovar Castro @jqviy
+- Jaime Torres Abad @JA1Me23
 
 ## Objetivos del trabajo
 - Agrupación de perfiles.
