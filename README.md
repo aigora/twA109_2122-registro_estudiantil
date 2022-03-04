@@ -6,7 +6,7 @@ tipo de malentendido de identificación.
 
 ## Integrantes del equipo
 
-- Álvaro Sánchez Barbas
+- Álvaro Sánchez Barba @ASB02
 - Javier Tovar Castro
 - Jaime Torres Abad
 
