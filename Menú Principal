@@ -21,20 +21,20 @@ void menu_ppal(void) {
 	Estudiante uno;
 	uno.op = 5;
 	while (uno.op <= 5) {
-		printf("\n=========Bienvenido a la ETSISDI=========\n");
-		printf("Seleccione una opción: \n");
-		printf("\n1.Perfil");
-		printf("\n2.Asignaturas");
-		printf("\n3.Entregas pendientes");
-		printf("\n4.Expediente:");
-		printf("\n5.Salir\n");
+		printf("=========Bienvenido a la ETSISDI=========\n\n");
+		printf("\tSeleccione una opción: \n");
+		printf("\n\t1.Perfil");
+		printf("\n\t2.Asignaturas");
+		printf("\n\t3.Entregas pendientes");
+		printf("\n\t4.Expediente:");
+		printf("\n\t5.Salir\n");
 		scanf_s("%d", &uno.op);
 		if (uno.op == 1) {
 			system("cls");
 			printf("Nombre: ");
 			printf("\tNumero matricula: ");
 			printf("\nClase: ");
-			printf("\nCorreo institucional: ");	
+			printf("\nCorreo institucional: \n\n");
 		}
 		if (uno.op == 2) {
 			system("cls");
@@ -46,44 +46,44 @@ void menu_ppal(void) {
 			printf("\n5.Asignatura 5");
 			scanf_s("%d", &uno.asig);
 			if (uno.asig == 1) {
-				printf("El siguiente examen es X");
-				printf("No tienes tareas pendientes");
+				printf("El siguiente examen es X\n");
+				printf("No tienes tareas pendientes\n\n");
 			}
 			if (uno.asig == 2) {
-				printf("El siguiente examen es X");
-				printf("No tienes tareas pendientes");
+				printf("El siguiente examen es X\n");
+				printf("No tienes tareas pendientes\n\n");
 			}
 			if (uno.asig == 3) {
-				printf("El siguiente examen es X");
-				printf("No tienes tareas pendientes");
+				printf("El siguiente examen es X\n");
+				printf("No tienes tareas pendientes\n\n");
 			}
 			if (uno.asig == 4) {
-				printf("El siguiente examen es X");
-				printf("No tienes tareas pendientes");
+				printf("El siguiente examen es X\n");
+				printf("No tienes tareas pendientes\n\n");
 			}
 			if (uno.asig == 5) {
-				printf("El siguiente examen es X");
-				printf("No tienes tareas pendientes");
+				printf("El siguiente examen es X\n");
+				printf("No tienes tareas pendientes\n\n");
 			}
-			
+
 		}
 		if (uno.op == 3) {
 			system("cls");
 			printf("Tarea x --> fecha");
-			printf("\nTarea y --> fecha");
-			
+			printf("\nTarea y --> fecha\n\n");
+
 		}
 		if (uno.op == 4) {
 			system("cls");
-			printf("Créditos obtenidos: \n");
-		
+			printf("Créditos obtenidos: \n\n");
+
 		}
 		if (uno.op == 5) {
-			printf("Hasta la próxima.");
-			uno.op = 6;
+			printf("Hasta la próxima.\n\n");
+
 		}
-		if (uno.op > 6){
-			printf("\nIndique una opción de las indicadas: ");
+		if (uno.op > 5) {
+			printf("\nIndique una opción de las indicadas: \n\n");
 			uno.op = 5;
 		}
 	}
