@@ -1,0 +1,17 @@
+void setup ()  
+{
+     Serial.begin(9600); // Configura velocidad puerto serie 9600 bits/sg.
+     while(!Serial) { ; } // Mientras no tenga conexión se queda en bucle.
+}
+void loop ()
+{
+     if( Serial.available()> 0) // Si hay datos disponibles en el puerto serie.
+     {
+        String str = Serial.readStringUntil('\n'); // Lee una cadena hasta \n
+        if (str.compareTo("GET_DISTANCIA")==0) // Si es GET_DISTANCIA …
+          str="DISTANCIA=25.378";  
+        else // Si no …
+          str="COMANDO DESCONOCIDO";
+        Serial.println(str); // Envía la respuesta a través del puerto serie.
+     }
+}
