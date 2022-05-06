@@ -1,0 +1,192 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
+
+#define TAM 50
+#define MAX 100
+typedef struct
+{
+    char nombre[TAM];
+    char correo[TAM];
+    char departamento[TAM];
+    char despacho[TAM];
+}Profesor;
+
+int menu(void);
+void listado_agenda(Profesor[], int);
+int  alta_Profesor(Profesor[], int);
+void crear_fichero_txt(Profesor[], int);
+void crear_fichero_bin(Profesor[], int);
+int leer_fichero_txt(Profesor[]);
+int leer_fichero_bin(Profesor[]);
+
+int main(void)
+{
+    Profesor agenda[MAX];
+    int nProfesors = 0;
+    int opcion;
+
+    setlocale(LC_ALL, "es-ES");
+    nProfesors = leer_fichero_txt(agenda);   
+    
+
+    do
+    {
+        opcion = menu();
+        switch (opcion)
+        {
+        case 1:
+            nProfesors = alta_Profesor(agenda, nProfesors);
+            break;
+        case 2:
+            listado_agenda(agenda, nProfesors);
+            break;
+        case 3:
+            break;
+        default:
+            printf("Opción incorrecta\n");
+        }
+    } while (opcion != 3);
+    crear_fichero_txt(agenda, nProfesors); 
+    crear_fichero_bin(agenda, nProfesors); 
+    return 0;
+}
+
+int menu(void)
+{
+    int op;
+    char intro;
+    printf("\n");
+    printf("1. Crear Profesor\n");
+    printf("2. Listado de Profesors\n");
+    printf("3. Salir del programa\n");
+    printf("Opción=");
+    scanf_s("%d", &op);
+    scanf_s("%c", &intro, 1);
+    return op;
+}
+
+void listado_agenda(Profesor a[], int n)
+{
+    int i;
+
+    printf("\nEl contenido del listado es:\n");
+    printf("\n=============================\n");
+    for (i = 0; i < n; i++)
+    {
+        printf("Nombre=%s\n", a[i].nombre);
+        printf("Correo=%s\n", a[i].correo);
+        printf("Departamento=%s\n", a[i].departamento);
+        printf("Despacho=%s\n", a[i].despacho);
+        printf("==============\n");
+    }
+}
+
+void crear_fichero_txt(Profesor a[], int n)
+{
+    FILE* fichero;
+    int i;
+    errno_t e;
+    e = fopen_s(&fichero, "Agenda.txt", "wt");
+    if (fichero == NULL)
+        printf("No se ha podido guardar\n");
+    else
+    {
+        for (i = 0; i < n; i++)
+        {
+            fprintf(fichero, "%s\n", a[i].nombre);
+            fprintf(fichero, "%s\n", a[i].correo);
+            fprintf(fichero, "%s\n", a[i].departamento);
+            fprintf(fichero, "%s\n", a[i].despacho);
+        }
+        fclose(fichero);
+    }
+
+}
+
+void crear_fichero_bin(Profesor a[], int n)
+{
+    FILE* fichero;
+    errno_t e;
+
+    e = fopen_s(&fichero, "Agenda.dat", "wb");
+    if (fichero == NULL)
+        printf("No se ha podido guardar\n");
+    else
+    {
+        fwrite(&n, sizeof(int), 1, fichero);
+        fwrite(a, sizeof(Profesor), n, fichero);
+        fclose(fichero);
+    }
+}
+
+int leer_fichero_txt(Profesor a[])
+{
+    FILE* fichero;
+    int n = 0;
+    errno_t e;
+    char* p;
+    e = fopen_s(&fichero, "Agenda.txt", "rt");
+    if (fichero == NULL)
+        printf("La agenda estaba vacía\n");
+    else
+    {
+        fgets(a[n].nombre, TAM, fichero);
+
+        while (!feof(fichero))
+        {
+            p = strchr(a[n].nombre, '\n'); 
+            *p = '\0';                   
+
+            fgets(a[n].correo, TAM, fichero);
+            fgets(a[n].departamento, TAM, fichero);
+            fgets(a[n].despacho, TAM, fichero);
+            n++;
+            fgets(a[n].nombre, TAM, fichero);
+            fgets(a[n].correo, TAM, fichero);
+            fgets(a[n].departamento, TAM, fichero);
+            fgets(a[n].despacho, TAM, fichero);
+        }
+        fclose(fichero);
+    }
+    return n;
+}
+
+int leer_fichero_bin(Profesor a[])
+{
+    FILE* fichero;
+    int n = 0;
+    errno_t e;
+
+    e = fopen_s(&fichero, "Agenda.dat", "rb");
+    if (fichero == NULL)
+        printf("La agenda estaba vacía\n");
+    else
+    {
+        fread(&n, sizeof(int), 1, fichero);
+        fread(a, sizeof(Profesor), n, fichero);
+        fclose(fichero);
+    }
+    return n;
+}
+
+
+int alta_Profesor(Profesor a[], int n)
+{
+    if (n < MAX)
+    {
+        printf("Nombre=");
+        scanf_s("%s", a[n].nombre, TAM);
+        printf("correo=");
+        scanf_s("%s", &a[n].correo, TAM);
+        printf("departamento=");
+        scanf_s("%s", &a[n].departamento, TAM);
+        printf("despacho=");
+        scanf_s("%s", &a[n].despacho, TAM);
+        n++;
+    }
+    else
+        printf("Agenda completa\n");
+    return n;
+}
