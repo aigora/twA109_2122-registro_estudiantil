@@ -1,0 +1,64 @@
+#include <time.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+int time_h(int contador);
+int main(void) {
+	int  contador, dias_ingresado;
+	int	dia_actual, mes_actual, hora;
+	for (contador = 0; contador < 3; contador++) //dia_actual, mes_actual, hora //este bucle for me extrae de la funcion time.h los valores que voy a usar en el main
+	{
+		if (contador == 0) {
+			hora = time_h(contador);
+		}
+
+		if (contador == 1) {
+			dia_actual = time_h(contador);
+		}
+		if (contador == 2) {
+			mes_actual = time_h(contador);
+		}
+
+	}
+	printf("%d\n", hora);
+	printf("%d\n", dia_actual);
+	printf("%d\n", mes_actual);
+}
+int time_h(int contador) //con esta funcion saco, de todo el codigo de la time.h las variables que me interesan
+{
+	int dia_actual, presente = 0;
+	struct tm newtime;
+	__time64_t long_time;
+	char timebuf[26];
+	int mes;
+	errno_t err;
+
+	_time64(&long_time);
+	err = _localtime64_s(&newtime, &long_time);
+	if (err)
+	{
+		printf("Invalid argument to _localtime64_s.");
+		return 0;
+	}
+
+	err = asctime_s(timebuf, 26, &newtime);
+	if (err)
+	{
+		printf("Invalid argument to asctime_s.");
+		return 0;
+	}
+	
+	mes = newtime.tm_mon + 1;
+	dia_actual = newtime.tm_mday;
+	
+
+	if (contador == 0)
+		presente = newtime.tm_hour;
+	if (contador == 1)
+		presente = newtime.tm_mday;
+	if (contador == 2)
+		presente = mes;
+
+	return(presente);
+}
