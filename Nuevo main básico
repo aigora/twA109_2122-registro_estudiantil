@@ -1,0 +1,74 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include <math.h>
+#include <locale.h>
+#include <conio.h>
+#include<time.h>
+
+
+//AQUI FUNCIONES
+
+int leer_entero(void);
+
+int main()
+{
+	setlocale(LC_CTYPE, "es-ES");
+
+
+	//Aqui irá arduino y declaración de variables
+
+	char tecla;
+
+	int opcion;
+
+
+
+
+
+	//Comienzo de lo que se ve en pantalla
+
+
+	printf("=========Bienvenido a la ETSISDI=========\n\n Pulse cualquier tecla para continuar");
+
+	tecla = _getch();
+
+	system("cls"); //LImpia lo q hay en pantalla
+
+	do
+	{
+		printf("Seleccione como quiere iniciar sesión:\n\n 1.Iniciar sesión como Administrador.\n 2.Iniciar sesión como estudiante.\n 3.Salir.");
+
+		opcion = leer_entero(); //funcion para elegir opcion
+
+		system("cls");
+
+		if (opcion == 1 || opcion == 2 || opcion == 3)//solo entra al menu si se introduce uno de estos valores
+		{
+			if (opcion == 1)
+			{
+				printf("opcion1\n");
+			
+			}
+			if (opcion == 2)
+			{
+				printf("opcion2\n");
+				
+			}
+
+		}
+		else
+		{
+			printf("\n\n\nUsted ha introduciod un valor incorrecto, porfavor introduzca un valor válido\n\n\n");
+		}
+
+	} while (opcion !=3 );
+
+}
+
+int leer_entero(void) { //con esta funcion evito sobrecargas al leer enteros y que quede en bucle el programa
+	char cadena[2];
+	int numero;
+	gets_s(cadena);
+	numero = atoi(cadena);//si hay un entero en la cadena se le asigana a num, sino, le asigna 0.
+	return (numero);
+}
