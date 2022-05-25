@@ -8,6 +8,14 @@
 
 #define TAM 50
 #define MAX 100
+#define USUARIO1 "j.tabad"
+#define USUARIO2 "j.tovar"
+#define USUARIO3 "a.sanchez"
+#define CLAVE1 "edcrfv"
+#define CLAVE2 "qazwsx"
+#define CLAVE3 "tgbyhn"
+#define INTENTOSMAX 3
+
 typedef struct
 {
     char nombre[TAM];
@@ -15,7 +23,7 @@ typedef struct
     char Titulacion[TAM];
     char correo[TAM];
     int asig;
-    char asignaturas [TAM];
+    char asignaturas[TAM];
     int i;
     int op;
 }Alumno;
@@ -24,16 +32,17 @@ typedef struct {
     char usuario[TAM];
     char clave[TAM];
     char re_clave[TAM];
+   
 }Intro;
 
 //AQUI FUNCIONES
 
 int leer_entero(void);
-void creacion_usuario_1(Alumno[], int );
-void creacion_usuario_2(Intro[], int );
+void creacion_usuario_1(Alumno[], int);
+void creacion_usuario_2(Intro[], int);
 int menu(void);
-void menu_alumno(Alumno[], int );
-
+void menu_alumno(Alumno[], int);
+void intro_1(Intro* cuenta1);
 void listado_agenda(Alumno[], int);
 int  alta_Alumno(Alumno[], int);
 void crear_fichero_txt(Alumno[], int);
@@ -45,7 +54,7 @@ int main()
 {
     setlocale(LC_CTYPE, "es-ES");
     Alumno uno;
-    
+
 
     //Aqui irá arduino y declaración de variables
 
@@ -61,7 +70,7 @@ int main()
     //Comienzo de lo que se ve en pantalla
 
 
-    printf("=========Bienvenido a la ETSISDI=========\n\n Pulse cualquier tecla para continuar");
+    printf("=========Bienvenido a la ETSIDI=========\n\n Pulse cualquier tecla para continuar");
 
     tecla = _getch();
 
@@ -121,8 +130,9 @@ int main()
             if (opcion == 2)
             {
                 int nAlumnos = 0;
-                creacion_usuario_2(cuenta2,nAlumnos);
-                menu_alumno(cuenta1,nAlumnos);
+                //creacion_usuario_2(cuenta2, nAlumnos);
+                intro_1(cuenta2);
+                menu_alumno(cuenta1, nAlumnos);
             }
 
         }
@@ -285,7 +295,7 @@ int alta_Alumno(Alumno a[], int n)
 }
 void creacion_usuario_1(Alumno cuenta1[], int n) {
     printf("Escriba los datos que se le piden a continuación\n");
-    
+
     if (n < MAX)
     {
         printf("Nombre:");
@@ -301,10 +311,10 @@ void creacion_usuario_1(Alumno cuenta1[], int n) {
         scanf_s("%s", &cuenta1[n].nombre, TAM);
     }
     //Comprobamos si las fechas son validas
-}   
-
+}
+/*
 void creacion_usuario_2(Intro cuenta2[], int n) {
-    int j = 0, largo = 0, m = 0,k;
+    int j = 0, largo = 0, m = 0, k;
     if (n < MAX)
     {
         printf("Usuario:");
@@ -345,7 +355,8 @@ void creacion_usuario_2(Intro cuenta2[], int n) {
         }
     }
 }
-void menu_alumno(Alumno cuenta1 [], int n) {
+*/
+void menu_alumno(Alumno cuenta1[], int n) {
     cuenta1[n].op = 5;
     char enter;
     if (n < MAX)
@@ -424,4 +435,38 @@ void menu_alumno(Alumno cuenta1 [], int n) {
             }
         }
     }
+}
+void intro_1(Intro* cuenta2) { //se crea la cuenta de un doctor
+    int k = 0, intento = 0;
+    do {
+        system("cls");
+        printf("\n\t\t\tIntroduzca sus credenciales\n");
+        printf("\n\tUSUARIO: ");
+        gets_s(cuenta2->usuario);
+        printf("\n\tCLAVE: ");
+        gets_s(cuenta2->clave);
+
+
+        if (strcmp(cuenta2->usuario, USUARIO1) == 0 && strcmp(cuenta2->clave, CLAVE1) == 0 || strcmp(cuenta2->usuario, USUARIO2) == 0 && strcmp(cuenta2->clave, CLAVE2) == 0 || strcmp(cuenta2->usuario, USUARIO3) == 0 && strcmp(cuenta2->clave, CLAVE3) == 0 )
+            intento = 1;
+
+        else {
+            printf("\nEl nombre de usuario y/o la clave no son correctos\n");
+            k++;
+            printf("\nHa consumido %d de sus 5 intentos\n", k);
+            getchar();
+        }
+
+    }
+
+    while (k < INTENTOSMAX && intento == 0);
+
+    if (intento == 1) {
+        printf("\n\n\tBienvenido a la etsidi\n\n\n");
+
+    }
+    else {
+        printf("\n\nHa alcanzado el numero maximo de intentos\n\n\n");
+    }
+
 }
