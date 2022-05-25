@@ -32,6 +32,8 @@ typedef struct {
     char usuario[TAM];
     char clave[TAM];
     char re_clave[TAM];
+    char n_usuario[TAM];
+    char n_clave[TAM];
    
 }Intro;
 
@@ -130,9 +132,23 @@ int main()
             if (opcion == 2)
             {
                 int nAlumnos = 0;
+                int x = 0;
                 //creacion_usuario_2(cuenta2, nAlumnos);
-                intro_1(cuenta2);
-                menu_alumno(cuenta1, nAlumnos);
+                printf("1.Iniciar sesión\n");
+                printf("2.Crear cuenta\n");
+                printf("Elija una opción de las siguientes: ");
+                scanf_s("%d", &x);
+                if (x == 1) {
+                    intro_1(cuenta2);
+                    menu_alumno(cuenta1, nAlumnos);
+                }
+                if (x == 2);
+                {
+                    creacion_usuario_2(cuenta2, nAlumnos);
+                    intro_1(cuenta2);
+                    menu_alumno(cuenta1, nAlumnos);
+                }
+                
             }
 
         }
@@ -312,7 +328,7 @@ void creacion_usuario_1(Alumno cuenta1[], int n) {
     }
     //Comprobamos si las fechas son validas
 }
-/*
+
 void creacion_usuario_2(Intro cuenta2[], int n) {
     int j = 0, largo = 0, m = 0, k;
     if (n < MAX)
@@ -350,12 +366,14 @@ void creacion_usuario_2(Intro cuenta2[], int n) {
             scanf_s("%s", &cuenta2[n].re_clave, TAM);
         }
         if (m == 1) {
+            strcpy_s(cuenta2[n].n_usuario, cuenta2[n].usuario);
+            strcpy_s(cuenta2[n].n_clave, cuenta2[n].clave);
             printf("Pulse cualquier tecla para continuar");
             k = getchar();
         }
     }
 }
-*/
+
 void menu_alumno(Alumno cuenta1[], int n) {
     cuenta1[n].op = 5;
     char enter;
@@ -447,7 +465,7 @@ void intro_1(Intro* cuenta2) { //se crea la cuenta de un doctor
         gets_s(cuenta2->clave);
 
 
-        if (strcmp(cuenta2->usuario, USUARIO1) == 0 && strcmp(cuenta2->clave, CLAVE1) == 0 || strcmp(cuenta2->usuario, USUARIO2) == 0 && strcmp(cuenta2->clave, CLAVE2) == 0 || strcmp(cuenta2->usuario, USUARIO3) == 0 && strcmp(cuenta2->clave, CLAVE3) == 0 )
+        if (strcmp(cuenta2->usuario, USUARIO1) == 0 && strcmp(cuenta2->clave, CLAVE1) == 0 || strcmp(cuenta2->usuario, USUARIO2) == 0 && strcmp(cuenta2->clave, CLAVE2) == 0 || strcmp(cuenta2->usuario, USUARIO3) == 0 && strcmp(cuenta2->clave, CLAVE3) == 0 || strcmp(cuenta2->n_usuario, cuenta2->usuario) == 0 && strcmp(cuenta2->n_clave, cuenta2->clave) == 0)
             intento = 1;
 
         else {
