@@ -472,7 +472,7 @@ int alta_Evento(Alumno b[], int n)
     if (n < MAX)
     {
         printf("Nombre =");
-        scanf_s("%s", &b[n].evento, TAM);
+        gets_s(b[n].evento,TAM);
         printf("Día =");
         scanf_s("%d", &b[n].dia);
         printf("Mes =");
