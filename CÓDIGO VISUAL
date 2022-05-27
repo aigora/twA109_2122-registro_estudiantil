@@ -533,7 +533,7 @@ void creacion_usuario_2(Intro cuenta2[], int n) {
         printf("Confirmar contraseña:");
         scanf_s("%s", &cuenta2[n].re_clave, TAM);
 
-        if (strcmp(cuenta2[n].clave, cuenta2[n].re_clave) == 0) { //&& strcmp(cuenta1->contraseña, cuenta1->re_clave) == 0
+        if (strcmp(cuenta2[n].clave, cuenta2[n].re_clave) == 0) { 
             m = 1;
         }
         else {
@@ -755,7 +755,7 @@ void menu_alumno(Alumno cuenta1[], int n) {
         }
     }
 }
-void intro_1(Intro* cuenta2, Alumno* cuenta1) { //se crea la cuenta de un doctor
+void intro_1(Intro* cuenta2, Alumno* cuenta1) {
     int k = 0, intento = 0;
     int p;
     int n = 100;
