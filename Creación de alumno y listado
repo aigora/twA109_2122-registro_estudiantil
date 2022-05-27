@@ -142,7 +142,7 @@ int leer_fichero_txt(Profesor a[])
             *p = '\0';
 
             fscanf_s(fichero, "%d\n", &a[n].Num_matricula);
-            fgets(a[n].Titulacion, TAM, fichero);
+            fgets(a[n].Titulacion, TAM, fichero)
             fgets(a[n].correo, TAM, fichero);
             n++;
             fgets(a[n].nombre, TAM, fichero);
