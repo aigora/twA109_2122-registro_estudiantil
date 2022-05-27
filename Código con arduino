@@ -601,10 +601,22 @@ void menu_alumno(Alumno cuenta1[], int n) {
                 printf("\n\t 3.Asignatura 3");
                 printf("\n\t 4.Asignatura 4");
                 printf("\n\t 5.Asignatura 5");
+               printf("\n\tElija una opción: ");
                 scanf_s("%d", &cuenta1[n].asig);
                 if (cuenta1[n].asig == 1) {
-                    printf("\n\n\tEl siguiente examen es X\n");
-                    printf("\tNo tienes tareas pendientes\n\n");
+                    if (cuenta1[n].alumno == 1) {
+                        printf("Nota: 5.6\n");
+                       
+                    }
+                    if (cuenta1[n].alumno == 2) {
+                        printf("Nota: 6\n");
+                       
+                    }
+                    if (cuenta1[n].alumno == 3) {
+                        printf("Nota: 4.5\n");
+                       
+                    }
+
                     printf("\tpulse 1 para volver al menu y otra tecla para cerrar el programa\n\n");
                     decision = leer_entero();
                     scanf_s("%d", &decision);
@@ -617,8 +629,18 @@ void menu_alumno(Alumno cuenta1[], int n) {
                         exit(-1);
                 }
                 if (cuenta1[n].asig == 2) {
-                    printf("\n\n\tEl siguiente examen es X\n");
-                    printf("\tNo tienes tareas pendientes\n\n");
+                    if (cuenta1[n].alumno == 1) {
+                        printf("Nota: 7\n");
+
+                    }
+                    if (cuenta1[n].alumno == 2) {
+                        printf("Nota: 5.8\n");
+
+                    }
+                    if (cuenta1[n].alumno == 3) {
+                        printf("Nota: 8.3\n");
+
+                    }
                     printf("\tpulse 1 para volver al menu y otra tecla para cerrar el programa\n\n");
                     decision = leer_entero();
                     scanf_s("%d", &decision);
@@ -631,8 +653,18 @@ void menu_alumno(Alumno cuenta1[], int n) {
                         exit(-1);
                 }
                 if (cuenta1[n].asig == 3) {
-                    printf("\n\n\tEl siguiente examen es X\n");
-                    printf("\tNo tienes tareas pendientes\n\n");
+                    if (cuenta1[n].alumno == 1) {
+                        printf("Nota: 4.6\n");
+
+                    }
+                    if (cuenta1[n].alumno == 2) {
+                        printf("Nota: 3.8\n");
+
+                    }
+                    if (cuenta1[n].alumno == 3) {
+                        printf("Nota: 1.4\n");
+
+                    }
                     printf("\tpulse 1 para volver al menu y otra tecla para cerrar el programa\n\n");
                     decision = leer_entero();
                     scanf_s("%d", &decision);
@@ -645,8 +677,18 @@ void menu_alumno(Alumno cuenta1[], int n) {
                         exit(-1);
                 }
                 if (cuenta1[n].asig == 4) {
-                    printf("\n\n\tEl siguiente examen es X\n");
-                    printf("\tNo tienes tareas pendientes\n\n");
+                    if (cuenta1[n].alumno == 1) {
+                        printf("Nota: 5\n");
+
+                    }
+                    if (cuenta1[n].alumno == 2) {
+                        printf("Nota: 4.9\n");
+
+                    }
+                    if (cuenta1[n].alumno == 3) {
+                        printf("Nota: 5.5\n");
+
+                    }
                     printf("\tpulse 1 para volver al menu y otra tecla para cerrar el programa\n\n");
                     decision = leer_entero();
                     scanf_s("%d", &decision);
@@ -659,8 +701,18 @@ void menu_alumno(Alumno cuenta1[], int n) {
                         exit(-1);
                 }
                 if (cuenta1[n].asig == 5) {
-                    printf("\n\n\t\El siguiente examen es X\n");
-                    printf("\tNo tienes tareas pendientes\n\n");
+                    if (cuenta1[n].alumno == 1) {
+                        printf("Nota: 5.7\n");
+
+                    }
+                    if (cuenta1[n].alumno == 2) {
+                        printf("Nota: 5.2\n");
+
+                    }
+                    if (cuenta1[n].alumno == 3) {
+                        printf("Nota: 5\n");
+
+                    }
                     printf("\t\pulse 1 para volver al menu y otra tecla para cerrar el programa\n\n");
                     decision = leer_entero();
                     scanf_s("%d", &decision);
