@@ -1,0 +1,807 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string>
+#include <math.h>
+#include "SerialClass/SerialClass.h"
+#include <locale.h>
+#include <conio.h>
+#include<time.h>
+
+#define TAM 50
+#define MAX 100
+#define USUARIO1 "j.tabad"
+#define USUARIO2 "j.tovar"
+#define USUARIO3 "a.sanchez"
+#define CLAVE1 "edcrfv"
+#define CLAVE2 "qazwsx"
+#define CLAVE3 "tgbyhn"
+#define INTENTOSMAX 5
+
+typedef struct
+{
+    char nombre[TAM];
+    int Num_matricula;
+    char Titulacion[TAM];
+    char correo[TAM];
+    int asig;
+    char asignaturas[TAM];
+    int i;
+    int op;
+    int alumno;
+    char evento[TAM];
+    int dia;
+    int mes;
+    int hora;
+}Alumno;
+
+typedef struct {
+    char usuario[TAM];
+    char clave[TAM];
+    char re_clave[TAM];
+    char n_usuario[TAM];
+    char n_clave[TAM];
+
+}Intro;
+
+//AQUI FUNCIONES
+
+int leer_entero(void);
+void creacion_usuario_1(Alumno[], int);
+void creacion_usuario_2(Intro[], int);
+int menu(void);
+
+int compruebafecha(Alumno[], int);
+void menu_alumno(Alumno[], int);
+void intro_1(Intro* cuenta2,Alumno* cuenta1);
+void listado_agenda(Alumno[], int);
+void listado_evento(Alumno[], int);
+int  alta_Alumno(Alumno[], int);
+int  alta_Evento(Alumno[], int);
+void crear_fichero_txt(Alumno[], int);
+void crear_fichero_txt1(Alumno[], int);
+int leer_fichero_txt(Alumno[]);
+int leer_fichero_txt1(Alumno[]);
+int Obtener_hora_actual(int );
+
+int main()
+{
+    setlocale(LC_CTYPE, "es-ES");
+    Alumno uno;
+    char puerto[] = "COM6";
+    int  contador, dias_ingresado;
+    int	dia_actual, mes_actual, hora_actual;
+    for (contador = 0; contador < 3; contador++) //dia_actual, mes_actual, hora //este bucle for me extrae de la funcion time.h los valores que voy a usar en el main
+    {
+        if (contador == 0) {
+            hora_actual = Obtener_hora_actual(contador);
+        }
+
+        if (contador == 1) {
+            dia_actual = Obtener_hora_actual(contador);
+        }
+        if (contador == 2) {
+            mes_actual = Obtener_hora_actual(contador);
+        }
+
+    }
+    printf("%d/%d/%d\n", dia_actual,mes_actual,hora_actual);
+
+    //Aqui irá arduino y declaración de variables
+
+    char tecla;
+    int opcion;
+    Alumno cuenta1[TAM];
+    Intro cuenta2[TAM];
+
+
+
+
+
+    //Comienzo de lo que se ve en pantalla
+
+
+    printf("=========Bienvenido a la ETSIDI=========\n\n Pulse cualquier tecla para continuar");
+
+    tecla = _getch();
+
+    system("cls"); //LImpia lo q hay en pantalla
+
+
+    while (Arduino->IsConnected())
+    {
+        sprintf_s(secuencia, "%d", count);
+        //gets_s(BufferSalida);
+        //printf("Enviando %s\n", BufferSalida);
+        char BufferSalida[200] = "tarjeta";
+        Arduino->WriteData(BufferSalida, strlen(BufferSalida));
+        count++;
+        if (count == 1)
+            Sleep(4000);
+        else
+            Sleep(4000);
+        bytesRecibidos = Arduino->ReadData(BufferEntrada, sizeof(char) * 199);
+        if (bytesRecibidos != -1)
+        {
+            BufferEntrada[bytesRecibidos - 1] = '\0';
+            comp = strcmp(BufferEntrada, BufferSalida);
+            if (comp == 1) {
+                printf("No se ha recibido nada\n");
+                Sleep(1000);
+                system("cls");
+            }
+            else {
+                do
+                {
+                    printf("Seleccione como quiere iniciar sesión:\n\n 1.Iniciar sesión como Administrador.\n 2.Iniciar sesión como estudiante.\n 3.Salir.");
+                    Arduino = new Serial((char*)puerto);
+                    opcion = leer_entero(); //funcion para elegir opcion
+
+                    system("cls");
+
+                    if (opcion == 1 || opcion == 2 || opcion == 3)//solo entra al menu si se introduce uno de estos valores
+                    {
+                        if (opcion == 1)
+                        {
+                            //printf("opcion1\n");
+
+                            do
+                            {
+
+                                Alumno agenda[MAX];
+                                Alumno evento[MAX];
+                                int nAlumnos = 0;
+                                int nAlumnos1 = 0;
+                                int opcion1;
+
+                                setlocale(LC_CTYPE, "es-ES");
+                                nAlumnos = leer_fichero_txt(agenda);
+                                nAlumnos1 = leer_fichero_txt1(evento);
+
+                                do
+                                {
+                                    opcion1 = menu();
+                                    switch (opcion1)
+                                    {
+                                    case 1:
+                                        nAlumnos = alta_Alumno(agenda, nAlumnos);
+                                        break;
+                                    case 2:
+                                        listado_agenda(agenda, nAlumnos);
+                                        break;
+                                    case 3:
+                                        nAlumnos1 = alta_Evento(evento, nAlumnos1);
+
+                                        break;
+                                    case 4:
+                                        listado_evento(evento, nAlumnos1);
+
+                                        break;
+                                    case 5:
+                                        exit(-1);
+                                        break;
+                                    default:
+                                        printf("Opción incorrecta\n");
+                                        break;
+                                    }
+                                } while (opcion1 != 5);
+                                crear_fichero_txt(agenda, nAlumnos);
+                                crear_fichero_txt1(evento, nAlumnos1);
+
+                                return 0;
+
+                            } while (opcion == 1);
+
+
+
+                        }
+                        if (opcion == 2)
+                        {
+                            int nAlumnos = 0;
+                            int x = 0;
+                            int puntos;
+                            Alumno* vector;
+                            vector = (Alumno*)malloc(sizeof(Alumno) * puntos);
+                            if (vector == NULL) {
+                                printf("No hay espacio suficiente");
+                            }
+                            //creacion_usuario_2(cuenta2, nAlumnos);
+                            printf("\n\tElija una opción de las siguientes: \n");
+                            printf("\n\t 1.Iniciar sesión\n");
+                            printf("\n\t 2.Crear cuenta\n");
+                            scanf_s("%d", &x);
+                            if (x == 1) {
+                                intro_1(cuenta2, cuenta1);
+                                menu_alumno(cuenta1, nAlumnos);
+                            }
+                            if (x == 2);
+                            {
+                                creacion_usuario_2(cuenta2, nAlumnos);
+                                intro_1(cuenta2, cuenta1);
+                                menu_alumno(cuenta1, nAlumnos);
+                            }
+
+                        }
+
+                    }
+                    else
+                    {
+                        printf("\n\n\nUsted ha introduciod un valor incorrecto, porfavor introduzca un valor válido\n\n\n");
+                    }
+
+                } while (opcion != 3);
+
+                if (compruebafecha(cuenta1, tecla) == 1)
+                {
+                    printf("");
+                }
+            }
+        }
+    }
+    
+}
+
+int leer_entero(void) { //con esta funcion evito sobrecargas al leer enteros y que quede en bucle el programa
+    char cadena[2];
+    int numero;
+    gets_s(cadena);
+    numero = atoi(cadena);//si hay un entero en la cadena se le asigana a num, sino, le asigna 0.
+    return (numero);
+}
+int menu(void)
+{
+    int op;
+    char intro;
+    printf("\n");
+    printf("1. Crear alumno\n");
+    printf("2. Listado de Alumnos\n");
+    printf("3. Crear evento\n");
+    printf("4. Listado de eventos\n");
+    printf("5. Salir del programa\n");
+    printf("Opción=");
+    scanf_s("%d", &op);
+    scanf_s("%c", &intro, 1);
+    return op;
+}
+
+void listado_agenda(Alumno a[], int n)
+{
+    int i;
+    setlocale(LC_CTYPE, "es-ES");
+    printf("\nEl contenido del listado es:\n");
+    printf("\n=============================\n");
+    for (i = 0; i < n; i++)
+    {
+        printf("Nombre =%s\n", a[i].nombre);
+        printf("Número de matricula =%d\n", a[i].Num_matricula);
+        printf("Titulación =%s\n", a[i].Titulacion);
+        printf("Correo institucional =%s\n", a[i].correo);
+        printf("==============\n");
+    }
+}
+void listado_evento(Alumno b[], int n)
+{
+    int i;
+    setlocale(LC_CTYPE, "es-ES");
+    printf("\nLos eventos son:\n");
+    printf("\n=============================\n");
+    for (i = 0; i < n; i++)
+    {
+        printf("Nombre del evento =%s\n", b[i].evento);
+        printf("Día =%d\n", b[i].dia);
+        printf("Mes =%d\n", b[i].mes);
+        printf("Hora =%d\n", b[i].hora);
+        printf("==============\n");
+    }
+}
+
+void crear_fichero_txt(Alumno a[], int n)
+{
+    FILE* fichero;
+    int i;
+    setlocale(LC_CTYPE, "es-ES");
+    errno_t e;
+    e = fopen_s(&fichero, "Agenda.txt", "wt");
+    if (fichero == NULL)
+        printf("No se ha podido guardar\n");
+    else
+    {
+        for (i = 0; i < n; i++)
+        {
+            fprintf(fichero, "%s\n", a[i].nombre);
+            fprintf(fichero, "%d\n", a[i].Num_matricula);
+            fprintf(fichero, "%s\n", a[i].Titulacion);
+            fprintf(fichero, "%s\n", a[i].correo);
+        }
+        fclose(fichero);
+    }
+
+}
+void crear_fichero_txt1(Alumno b[], int n)
+{
+    FILE* fichero;
+    int i;
+    setlocale(LC_CTYPE, "es-ES");
+    errno_t e;
+    e = fopen_s(&fichero, "Evento.txt", "at");
+    if (fichero == NULL)
+        printf("No se ha podido guardar\n");
+    else
+    {
+        for (i = 0; i < n; i++)
+        {
+            fprintf(fichero, "%s\n", b[i].evento);
+            fprintf(fichero, "%d\n", b[i].dia);
+            fprintf(fichero, "%d\n", b[i].mes);
+            fprintf(fichero, "%d\n", b[i].hora);
+        }
+        fclose(fichero);
+    }
+
+}
+
+
+int leer_fichero_txt(Alumno a[])
+{
+    setlocale(LC_CTYPE, "es-ES");
+    FILE* fichero;
+    int n = 0;
+    errno_t e;
+    char* p;
+    e = fopen_s(&fichero, "Agenda.txt", "rt");
+    if (fichero == NULL)
+        printf("La lista estaba vacía\n");
+    else
+    {
+        fgets(a[n].nombre, TAM, fichero);
+
+        while (!feof(fichero))
+        {
+            p = strchr(a[n].nombre, '\n');
+            *p = '\0';
+
+            fscanf_s(fichero, "%d\n", &a[n].Num_matricula);
+            fgets(a[n].Titulacion, TAM, fichero);
+            fgets(a[n].correo, TAM, fichero);
+            n++;
+            fgets(a[n].nombre, TAM, fichero);
+            fscanf_s(fichero, "%d\n", &a[n].Num_matricula);
+            fgets(a[n].Titulacion, TAM, fichero);
+            fgets(a[n].correo, TAM, fichero);
+        }
+        fclose(fichero);
+    }
+    return n;
+}
+int leer_fichero_txt1(Alumno b[])
+{
+    setlocale(LC_CTYPE, "es-ES");
+    FILE* fichero;
+    int n = 0;
+    errno_t e;
+    char* p;
+    e = fopen_s(&fichero, "Evento.txt", "rt");
+    if (fichero == NULL)
+        printf("La lista estaba vacía\n");
+    else
+    {
+        fgets(b[n].evento, TAM, fichero);
+
+        while (!feof(fichero))
+        {
+            p = strchr(b[n].evento, '\n');
+            *p = '\0';
+
+            fscanf_s(fichero, "%d\n", &b[n].dia);
+            fscanf_s(fichero, "%d\n", &b[n].mes);
+            fscanf_s(fichero, "%d\n", &b[n].hora);
+            n++;
+            fgets(b[n].evento, TAM, fichero);
+            fscanf_s(fichero, "%d\n", &b[n].dia);
+            fscanf_s(fichero, "%d\n", &b[n].mes);
+            fscanf_s(fichero, "%d\n", &b[n].hora);
+        }
+        fclose(fichero);
+    }
+    return n;
+}
+/*int leer_fichero_bin(Alumno a[])
+{
+    setlocale(LC_CTYPE, "es-ES");
+    FILE* fichero;
+    int n = 0;
+    errno_t e;
+
+    e = fopen_s(&fichero, "Agenda.dat", "rb");
+    if (fichero == NULL)
+        printf("La agenda estaba vacía\n");
+    else
+    {
+        fread(&n, sizeof(int), 1, fichero);
+        fread(a, sizeof(Alumno), n, fichero);
+        fclose(fichero);
+    }
+    return n;
+}
+*/
+
+int compruebafecha(Alumno b[], int n)
+{
+    int  contador, dias_ingresado;
+    int	dia_actual, mes_actual, hora_actual;
+        for (contador = 0; contador < 3; contador++) //dia_actual, mes_actual, hora //este bucle for me extrae de la funcion time.h los valores que voy a usar en el main
+        {
+            if (contador == 0) {
+                hora_actual = Obtener_hora_actual(contador);
+            }
+
+            if (contador == 1) {
+                dia_actual = Obtener_hora_actual(contador);
+            }
+            if (contador == 2) {
+                mes_actual = Obtener_hora_actual(contador);
+            }
+
+        }
+        if (b[n].dia == dia_actual && b[n].mes == mes_actual && b[n].hora == hora_actual) {
+            return 1;
+        }
+}
+
+int alta_Alumno(Alumno a[], int n)
+{
+    setlocale(LC_CTYPE, "es-ES");
+    if (n < MAX)
+    {
+        printf("Nombre =");
+        scanf_s("%s", &a[n].nombre, TAM);
+        printf("Número de matricula =");
+        scanf_s("%d", &a[n].Num_matricula);
+        printf("Titulación =");
+        scanf_s("%s", &a[n].Titulacion, TAM);
+        printf("Correo institucional =");
+        scanf_s("%s", &a[n].correo, TAM);
+        n++;
+    }
+    else
+        printf("Agenda completa\n");
+    return n;
+}
+int alta_Evento(Alumno b[], int n)
+{
+    setlocale(LC_CTYPE, "es-ES");
+    if (n < MAX)
+    {
+        printf("Nombre =");
+        scanf_s("%s", &b[n].evento, TAM);
+        printf("Día =");
+        scanf_s("%d", &b[n].dia);
+        printf("Mes =");
+        scanf_s("%d", &b[n].mes);
+        printf("Hora =");
+        scanf_s("%d", &b[n].hora);
+        n++;
+    }
+    else
+        printf("Listado completa\n");
+    return n;
+}
+void creacion_usuario_1(Alumno cuenta1[], int n) {
+    printf("Escriba los datos que se le piden a continuación\n");
+
+    if (n < MAX)
+    {
+        printf("Nombre:");
+        scanf_s("%s", &cuenta1[n].nombre, TAM);
+
+        printf("Num_matricula:");
+        scanf_s("%d", &cuenta1[n].Num_matricula);
+
+        printf("Correo institucional:");
+        scanf_s("%s", &cuenta1[n].correo, TAM);
+
+        printf("Titulación:");
+        scanf_s("%s", &cuenta1[n].Titulacion, TAM);
+    }
+    //Comprobamos si las fechas son validas
+}
+
+void creacion_usuario_2(Intro cuenta2[], int n) {
+    int j = 0, largo = 0, m = 0, k;
+    if (n < MAX)
+    {
+        printf("Usuario:");
+        scanf_s("%s", &cuenta2[n].usuario, TAM);
+        printf("Contraseña: (minimo 8 caracteres):");
+        scanf_s("%s", &cuenta2[n].clave, TAM);
+
+
+
+        while (cuenta2[n].clave[j] != '\0')
+        {
+            largo++;
+            if (cuenta2[n].clave[j] == ' ')
+                largo--;
+            j++;
+        }
+
+        if (j < 8) {
+            printf("Obligatorio 8 caracteres\n");
+            printf("Contraseña:");
+            scanf_s("%s", &cuenta2[n].clave, TAM);
+        }
+
+        printf("Confirmar contraseña:");
+        scanf_s("%s", &cuenta2[n].re_clave, TAM);
+
+        if (strcmp(cuenta2[n].clave, cuenta2[n].re_clave) == 0) { //&& strcmp(cuenta1->contraseña, cuenta1->re_clave) == 0
+            m = 1;
+        }
+        else {
+            printf("Las contraseñas no coinciden");
+            printf("\nRepetir contraseña:");
+            scanf_s("%s", &cuenta2[n].re_clave, TAM);
+        }
+        if (m == 1) {
+            strcpy_s(cuenta2[n].n_usuario, cuenta2[n].usuario);
+            strcpy_s(cuenta2[n].n_clave, cuenta2[n].clave);
+            printf("Pulse cualquier tecla para continuar");
+            k = getchar();
+        }
+    }
+}
+
+void menu_alumno(Alumno cuenta1[], int n) {
+    cuenta1[n].op = 5;
+    char enter;
+    Alumno a[TAM];
+    Alumno evento[MAX];
+    int nAlumnos1 = 1;
+    int decision;
+    if (n < MAX)
+    {
+        while (cuenta1[n].op <= 5) {
+            printf("\n=========Bienvenido a la ETSISDI=========\n\n");
+            printf("\tSeleccione una opción: \n");
+            printf("\n\t1.Perfil");
+            printf("\n\t2.Asignaturas");
+            printf("\n\t3.Entregas pendientes");
+            printf("\n\t4.Expediente:");
+            printf("\n\t5.Salir\n");
+            scanf_s("%d", &cuenta1[n].op);
+            if (cuenta1[n].op == 1) {
+                if (cuenta1[n].alumno == 1) {
+                    printf("Nombre: Jaime\n");
+                    printf("Numero matricula: 56125");
+                    printf("\nClase: A204 ");
+                    printf("\nCorreo institucional: j.tabad@alumnos.upm.es\n\n");
+                }
+                if (cuenta1[n].alumno == 2) {
+                    printf("Nombre: Javier\n");
+                    printf("Numero matricula: 56128");
+                    printf("\nClase: A204 ");
+                    printf("\nCorreo institucional: javier.tovar.castro@alumnos.upm.es\n\n");
+                }
+                if (cuenta1[n].alumno == 3) {
+                    printf("Nombre: Alvaro\n");
+                    printf("Numero matricula: 56085");
+                    printf("\nClase: A109 ");
+                    printf("\nCorreo institucional: a.sanchez@alumnos.upm.es\n\n");
+                }
+              
+                printf("si desea volver al menu, pulse cualquier tecla");
+                enter = _getch();
+                system("cls");
+                cuenta1[n].op = 0;
+            }
+            if (cuenta1[n].op == 2) {
+                system("cls");
+                printf("\n\n\tSeleccione la asignatura:\n");
+                printf("\n\t 1.Asignatura 1");
+                printf("\n\t 2.Asignatura 2");
+                printf("\n\t 3.Asignatura 3");
+                printf("\n\t 4.Asignatura 4");
+                printf("\n\t 5.Asignatura 5");
+                scanf_s("%d", &cuenta1[n].asig);
+                if (cuenta1[n].asig == 1) {
+                    printf("\n\n\tEl siguiente examen es X\n");
+                    printf("\tNo tienes tareas pendientes\n\n");
+                    printf("\tpulse 1 para volver al menu y otra tecla para cerrar el programa\n\n");
+                    decision = leer_entero();
+                    scanf_s("%d", &decision);
+                    if (decision == 1)
+                    {
+                        system("cls");
+                        cuenta1[n].op = 0;
+                    }
+                    else
+                        exit(-1);
+                }
+                if (cuenta1[n].asig == 2) {
+                    printf("\n\n\tEl siguiente examen es X\n");
+                    printf("\tNo tienes tareas pendientes\n\n");
+                    printf("\tpulse 1 para volver al menu y otra tecla para cerrar el programa\n\n");
+                    decision = leer_entero();
+                    scanf_s("%d", &decision);
+                    if (decision == 1)
+                    {
+                        system("cls");
+                        cuenta1[n].op = 0;
+                    }
+                    else
+                        exit(-1);
+                }
+                if (cuenta1[n].asig == 3) {
+                    printf("\n\n\tEl siguiente examen es X\n");
+                    printf("\tNo tienes tareas pendientes\n\n");
+                    printf("\tpulse 1 para volver al menu y otra tecla para cerrar el programa\n\n");
+                    decision = leer_entero();
+                    scanf_s("%d", &decision);
+                    if (decision == 1)
+                    {
+                        system("cls");
+                        cuenta1[n].op = 0;
+                    }
+                    else
+                        exit(-1);
+                }
+                if (cuenta1[n].asig == 4) {
+                    printf("\n\n\tEl siguiente examen es X\n");
+                    printf("\tNo tienes tareas pendientes\n\n");
+                    printf("\tpulse 1 para volver al menu y otra tecla para cerrar el programa\n\n");
+                    decision = leer_entero();
+                    scanf_s("%d", &decision);
+                    if (decision == 1)
+                    {
+                        system("cls");
+                        cuenta1[n].op = 0;
+                    }
+                    else
+                        exit(-1);
+                }
+                if (cuenta1[n].asig == 5) {
+                    printf("\n\n\t\El siguiente examen es X\n");
+                    printf("\tNo tienes tareas pendientes\n\n");
+                    printf("\t\pulse 1 para volver al menu y otra tecla para cerrar el programa\n\n");
+                    decision = leer_entero();
+                    scanf_s("%d", &decision);
+                    if (decision == 1)
+                    {
+                        system("cls");
+                        cuenta1[n].op = 0;
+                    }
+                    else
+                        exit(-1);
+                }
+
+            }
+            if (cuenta1[n].op == 3) {
+                system("cls");
+                nAlumnos1 = leer_fichero_txt1(evento);
+                listado_evento(evento, nAlumnos1);
+                
+                printf("pulse 1 para volver al menu y otra tecla para cerrar el programa\n\n");
+                decision = leer_entero();
+                scanf_s("%d", &decision);
+                if (decision == 1)
+                {
+                    system("cls");
+                    cuenta1[n].op = 0;
+                }
+                else
+                    exit(-1);
+
+            }
+            if (cuenta1[n].op == 4) {
+                system("cls");
+                printf("Créditos obtenidos: \n\n");
+                printf("pulse 1 para volver al menu y otra tecla para cerrar el programa\n\n");
+                decision = leer_entero();
+                scanf_s("%d", &decision);
+                if (decision == 1)
+                {
+                    system("cls");
+                    cuenta1[n].op = 0;
+                }
+                else
+                    exit(-1);
+
+                //system("cls");
+                //cuenta1[n].op = 0;
+            }
+            if (cuenta1[n].op == 5) {
+                system("cls");
+                printf("\n\nHasta la próxima.\n\n");
+                exit(-1);
+
+            }
+            if (cuenta1[n].op > 5) {
+                printf("\nIndique una opción de las indicadas: \n\n");
+                cuenta1[n].op = 5;
+            }
+        }
+    }
+}
+void intro_1(Intro* cuenta2, Alumno* cuenta1) { //se crea la cuenta de un doctor
+    int k = 0, intento = 0;
+    int p;
+    int n = 100;
+    char teclaso;
+    do {
+        system("cls");
+        printf("\n\t\t\tIntroduzca sus credenciales\n");
+        printf("\n\tUSUARIO: ");
+        gets_s(cuenta2->usuario);
+        printf("\n\tCLAVE: ");
+        gets_s(cuenta2->clave);
+
+
+        if (strcmp(cuenta2->usuario, USUARIO1) == 0 && strcmp(cuenta2->clave, CLAVE1) == 0 || strcmp(cuenta2->usuario, USUARIO2) == 0 && strcmp(cuenta2->clave, CLAVE2) == 0 || strcmp(cuenta2->usuario, USUARIO3) == 0 && strcmp(cuenta2->clave, CLAVE3) == 0 || strcmp(cuenta2->n_usuario, cuenta2->usuario) == 0 && strcmp(cuenta2->n_clave, cuenta2->clave) == 0)
+            intento = 1;
+
+        else {
+            printf("\nEl nombre de usuario y/o la clave no son correctos\n");
+            k++;
+            printf("\nHa consumido %d de sus 5 intentos\n", k);
+            getchar();
+        }
+        if (strcmp(cuenta2->usuario, USUARIO1) == 0 && strcmp(cuenta2->clave, CLAVE1) == 0) {
+            cuenta1->alumno = 1;
+        }
+        if (strcmp(cuenta2->usuario, USUARIO2) == 0 && strcmp(cuenta2->clave, CLAVE2) == 0) {
+            cuenta1->alumno = 2;
+            
+        }
+        if (strcmp(cuenta2->usuario, USUARIO3) == 0 && strcmp(cuenta2->clave, CLAVE3) == 0) {
+            cuenta1->alumno = 3;
+        }
+    }while (k < INTENTOSMAX && intento == 0);
+
+    
+    if (intento == 1) {
+        system("cls");
+    }
+    else {
+        printf("\nHa alcanzado el numero maximo de intentos\n\n\nPulse cualquier tecla para cerrar el programa");
+        teclaso = _getch();
+        exit(-1);
+    }
+
+
+}
+int Obtener_hora_actual(int contador) //con esta funcion saco, de todo el codigo de la time.h las variables que me interesan
+{
+    int dia_actual, presente = 0;
+    struct tm newtime;
+    __time64_t long_time;
+    char timebuf[26];
+    int mes;
+    errno_t err;
+
+    _time64(&long_time);
+    err = _localtime64_s(&newtime, &long_time);
+    if (err)
+    {
+        printf("Invalid argument to _localtime64_s.");
+        return 0;
+    }
+
+    err = asctime_s(timebuf, 26, &newtime);
+    if (err)
+    {
+        printf("Invalid argument to asctime_s.");
+        return 0;
+    }
+
+    mes = newtime.tm_mon + 1;
+    dia_actual = newtime.tm_mday;
+
+
+    if (contador == 0)
+        presente = newtime.tm_hour;
+    if (contador == 1)
+        presente = newtime.tm_mday;
+    if (contador == 2)
+        presente = mes;
+
+    return(presente);
+}
