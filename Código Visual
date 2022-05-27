@@ -565,8 +565,7 @@ void menu_alumno(Alumno cuenta1[], int n) {
             printf("\n\t1.Perfil");
             printf("\n\t2.Asignaturas");
             printf("\n\t3.Entregas pendientes");
-            printf("\n\t4.Expediente:");
-            printf("\n\t5.Salir\n");
+            printf("\n\t4.Salir\n");
             scanf_s("%d", &cuenta1[n].op);
             if (cuenta1[n].op == 1) {
                 if (cuenta1[n].alumno == 1) {
@@ -745,28 +744,11 @@ void menu_alumno(Alumno cuenta1[], int n) {
             }
             if (cuenta1[n].op == 4) {
                 system("cls");
-                printf("Créditos obtenidos: \n\n");
-                printf("pulse 1 para volver al menu y otra tecla para cerrar el programa\n\n");
-                decision = leer_entero();
-                scanf_s("%d", &decision);
-                if (decision == 1)
-                {
-                    system("cls");
-                    cuenta1[n].op = 0;
-                }
-                else
-                    exit(-1);
-
-                //system("cls");
-                //cuenta1[n].op = 0;
-            }
-            if (cuenta1[n].op == 5) {
-                system("cls");
                 printf("\n\nHasta la próxima.\n\n");
                 exit(-1);
 
             }
-            if (cuenta1[n].op > 5) {
+            if (cuenta1[n].op > 4) {
                 printf("\nIndique una opción de las indicadas: \n\n");
                 cuenta1[n].op = 5;
             }
