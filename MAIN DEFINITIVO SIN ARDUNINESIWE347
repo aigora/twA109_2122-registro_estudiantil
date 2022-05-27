@@ -51,7 +51,7 @@ int menu(void);
 
 int compruebafecha(Alumno[], int);
 void menu_alumno(Alumno[], int);
-void intro_1(Intro* cuenta2,Alumno* cuenta1);
+void intro_1(Intro* cuenta2, Alumno* cuenta1);
 void listado_agenda(Alumno[], int);
 void listado_evento(Alumno[], int);
 int  alta_Alumno(Alumno[], int);
@@ -60,7 +60,7 @@ void crear_fichero_txt(Alumno[], int);
 void crear_fichero_txt1(Alumno[], int);
 int leer_fichero_txt(Alumno[]);
 int leer_fichero_txt1(Alumno[]);
-int Obtener_hora_actual(int );
+int Obtener_hora_actual(int);
 
 int main()
 {
@@ -82,7 +82,7 @@ int main()
         }
 
     }
-    printf("%d/%d/%d\n", dia_actual,mes_actual,hora_actual);
+    printf("%d/%d/%d\n", dia_actual, mes_actual, hora_actual);
 
     //Aqui irá arduino y declaración de variables
 
@@ -145,11 +145,11 @@ int main()
                             break;
                         case 3:
                             nAlumnos1 = alta_Evento(evento, nAlumnos1);
-                            
+
                             break;
                         case 4:
                             listado_evento(evento, nAlumnos1);
-                            
+
                             break;
                         case 5:
                             exit(-1);
@@ -161,7 +161,7 @@ int main()
                     } while (opcion1 != 5);
                     crear_fichero_txt(agenda, nAlumnos);
                     crear_fichero_txt1(evento, nAlumnos1);
-                   
+
                     return 0;
 
                 } while (opcion == 1);
@@ -185,7 +185,7 @@ int main()
                 if (x == 2);
                 {
                     creacion_usuario_2(cuenta2, nAlumnos);
-                    intro_1(cuenta2,cuenta1);
+                    intro_1(cuenta2, cuenta1);
                     menu_alumno(cuenta1, nAlumnos);
                 }
 
@@ -199,7 +199,7 @@ int main()
 
     } while (opcion != 3);
 
-    if (compruebafecha(cuenta1, tecla)==1) 
+    if (compruebafecha(cuenta1, tecla) == 1)
     {
         printf("aaaaaaaaa");
     }
@@ -393,23 +393,23 @@ int compruebafecha(Alumno b[], int n)
 {
     int  contador, dias_ingresado;
     int	dia_actual, mes_actual, hora_actual;
-        for (contador = 0; contador < 3; contador++) //dia_actual, mes_actual, hora //este bucle for me extrae de la funcion time.h los valores que voy a usar en el main
-        {
-            if (contador == 0) {
-                hora_actual = Obtener_hora_actual(contador);
-            }
-
-            if (contador == 1) {
-                dia_actual = Obtener_hora_actual(contador);
-            }
-            if (contador == 2) {
-                mes_actual = Obtener_hora_actual(contador);
-            }
-
+    for (contador = 0; contador < 3; contador++) //dia_actual, mes_actual, hora //este bucle for me extrae de la funcion time.h los valores que voy a usar en el main
+    {
+        if (contador == 0) {
+            hora_actual = Obtener_hora_actual(contador);
         }
-        if (b[n].dia == dia_actual && b[n].mes == mes_actual && b[n].hora == hora_actual) {
-            return 1;
+
+        if (contador == 1) {
+            dia_actual = Obtener_hora_actual(contador);
         }
+        if (contador == 2) {
+            mes_actual = Obtener_hora_actual(contador);
+        }
+
+    }
+    if (b[n].dia == dia_actual && b[n].mes == mes_actual && b[n].hora == hora_actual) {
+        return 1;
+    }
 }
 
 int alta_Alumno(Alumno a[], int n)
@@ -552,7 +552,7 @@ void menu_alumno(Alumno cuenta1[], int n) {
                     printf("\nClase: A109 ");
                     printf("\nCorreo institucional: a.sanchez@alumnos.upm.es\n\n");
                 }
-              
+
                 printf("si desea volver al menu, pulse cualquier tecla");
                 enter = _getch();
                 system("cls");
@@ -560,16 +560,29 @@ void menu_alumno(Alumno cuenta1[], int n) {
             }
             if (cuenta1[n].op == 2) {
                 system("cls");
+
                 printf("\n\n\tSeleccione la asignatura:\n");
-                printf("\n\t 1.Asignatura 1");
-                printf("\n\t 2.Asignatura 2");
-                printf("\n\t 3.Asignatura 3");
-                printf("\n\t 4.Asignatura 4");
-                printf("\n\t 5.Asignatura 5");
+                printf("\n\t 1.Transmision de Calor");
+                printf("\n\t 2.Electronica");
+                printf("\n\t 3.Maquinas eléctricas");
+                printf("\n\t 4.Automática");
+                printf("\n\t 5.Informática");
+                printf("\n\tElija una opción: ");
                 scanf_s("%d", &cuenta1[n].asig);
                 if (cuenta1[n].asig == 1) {
-                    printf("\n\n\tEl siguiente examen es X\n");
-                    printf("\tNo tienes tareas pendientes\n\n");
+                    if (cuenta1[n].alumno == 1) {
+                        printf("Nota: 5.6\n");
+                       
+                    }
+                    if (cuenta1[n].alumno == 2) {
+                        printf("Nota: 6\n");
+                       
+                    }
+                    if (cuenta1[n].alumno == 3) {
+                        printf("Nota: 4.5\n");
+                       
+                    }
+
                     printf("\tpulse 1 para volver al menu y otra tecla para cerrar el programa\n\n");
                     decision = leer_entero();
                     scanf_s("%d", &decision);
@@ -582,8 +595,18 @@ void menu_alumno(Alumno cuenta1[], int n) {
                         exit(-1);
                 }
                 if (cuenta1[n].asig == 2) {
-                    printf("\n\n\tEl siguiente examen es X\n");
-                    printf("\tNo tienes tareas pendientes\n\n");
+                    if (cuenta1[n].alumno == 1) {
+                        printf("Nota: 7\n");
+
+                    }
+                    if (cuenta1[n].alumno == 2) {
+                        printf("Nota: 5.8\n");
+
+                    }
+                    if (cuenta1[n].alumno == 3) {
+                        printf("Nota: 8.3\n");
+
+                    }
                     printf("\tpulse 1 para volver al menu y otra tecla para cerrar el programa\n\n");
                     decision = leer_entero();
                     scanf_s("%d", &decision);
@@ -596,8 +619,18 @@ void menu_alumno(Alumno cuenta1[], int n) {
                         exit(-1);
                 }
                 if (cuenta1[n].asig == 3) {
-                    printf("\n\n\tEl siguiente examen es X\n");
-                    printf("\tNo tienes tareas pendientes\n\n");
+                    if (cuenta1[n].alumno == 1) {
+                        printf("Nota: 4.6\n");
+
+                    }
+                    if (cuenta1[n].alumno == 2) {
+                        printf("Nota: 3.8\n");
+
+                    }
+                    if (cuenta1[n].alumno == 3) {
+                        printf("Nota: 1.4\n");
+
+                    }
                     printf("\tpulse 1 para volver al menu y otra tecla para cerrar el programa\n\n");
                     decision = leer_entero();
                     scanf_s("%d", &decision);
@@ -610,8 +643,18 @@ void menu_alumno(Alumno cuenta1[], int n) {
                         exit(-1);
                 }
                 if (cuenta1[n].asig == 4) {
-                    printf("\n\n\tEl siguiente examen es X\n");
-                    printf("\tNo tienes tareas pendientes\n\n");
+                    if (cuenta1[n].alumno == 1) {
+                        printf("Nota: 5\n");
+
+                    }
+                    if (cuenta1[n].alumno == 2) {
+                        printf("Nota: 4.9\n");
+
+                    }
+                    if (cuenta1[n].alumno == 3) {
+                        printf("Nota: 5.5\n");
+
+                    }
                     printf("\tpulse 1 para volver al menu y otra tecla para cerrar el programa\n\n");
                     decision = leer_entero();
                     scanf_s("%d", &decision);
@@ -624,8 +667,18 @@ void menu_alumno(Alumno cuenta1[], int n) {
                         exit(-1);
                 }
                 if (cuenta1[n].asig == 5) {
-                    printf("\n\n\t\El siguiente examen es X\n");
-                    printf("\tNo tienes tareas pendientes\n\n");
+                    if (cuenta1[n].alumno == 1) {
+                        printf("Nota: 5.7\n");
+
+                    }
+                    if (cuenta1[n].alumno == 2) {
+                        printf("Nota: 5.2\n");
+
+                    }
+                    if (cuenta1[n].alumno == 3) {
+                        printf("Nota: 5\n");
+
+                    }
                     printf("\t\pulse 1 para volver al menu y otra tecla para cerrar el programa\n\n");
                     decision = leer_entero();
                     scanf_s("%d", &decision);
@@ -643,7 +696,7 @@ void menu_alumno(Alumno cuenta1[], int n) {
                 system("cls");
                 nAlumnos1 = leer_fichero_txt1(evento);
                 listado_evento(evento, nAlumnos1);
-                
+
                 printf("pulse 1 para volver al menu y otra tecla para cerrar el programa\n\n");
                 decision = leer_entero();
                 scanf_s("%d", &decision);
@@ -714,14 +767,14 @@ void intro_1(Intro* cuenta2, Alumno* cuenta1) { //se crea la cuenta de un doctor
         }
         if (strcmp(cuenta2->usuario, USUARIO2) == 0 && strcmp(cuenta2->clave, CLAVE2) == 0) {
             cuenta1->alumno = 2;
-            
+
         }
         if (strcmp(cuenta2->usuario, USUARIO3) == 0 && strcmp(cuenta2->clave, CLAVE3) == 0) {
             cuenta1->alumno = 3;
         }
-    }while (k < INTENTOSMAX && intento == 0);
+    } while (k < INTENTOSMAX && intento == 0);
 
-    
+
     if (intento == 1) {
         system("cls");
     }
